@@ -1,3 +1,54 @@
+<?php
+session_start();
+include "koneksi.php";
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+    echo "<script>
+    alert('Akses ditolak! Halaman ini hanya untuk Admin.');
+    window.location.href='login.php';
+  </script>";
+    exit;
+}
+
+if (isset($_POST['simpan'])) {
+    // Ambil ID terakhir dari tb_user
+    $auto = mysqli_query($koneksi, "SELECT MAX(id_user) AS max_code FROM tb_user");
+    $hasil = mysqli_fetch_array($auto);
+    $code = $hasil['max_code'];
+
+    // Menghasilkan ID baru dengan format U001, U002, dst.
+    $urutan = (int)substr($code, 1, 3);
+    $urutan++;
+    $huruf = "U";
+    $id_user = $huruf . sprintf("%03s", $urutan);
+
+    // Ambil input dari form
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
+    $status = $_POST['status'];
+
+    // Query untuk insert data ke tb_user
+    $query = mysqli_query($koneksi, "INSERT INTO tb_user (id_user, username, password, status) 
+                                     VALUES ('$id_user', '$username', '$password', '$status')");
+
+    // Notifikasi
+    if ($query) {
+        echo "<script>alert('Data pengguna berhasil ditambahkan!');</script>";
+        header("refresh:0, pengguna.php");
+    } else {
+        echo "<script>alert('Data pengguna gagal ditambahkan!');</script>";
+        header("refresh:0, pengguna.php");
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +56,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Arsialiving Admin</title>
+    <title>Pengguna - arsialiving</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -28,7 +79,6 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -39,47 +89,27 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Arsialiving</span>
+                <span class="d-none d-lg-block">arsialiving</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?>">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div><!-- End Search Bar -->
-
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle " href="#">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li><!-- End Search Icon-->
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/poto.png" alt="Profile" class="rounded-circle">
+                        <img src="assets/img/user.jpg" alt="Profile" class="rounded-circle">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>jetta</h6>
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
                             <span>Admin</span>
                         </li>
                         <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -106,7 +136,7 @@
             </li><!-- End Beranda Nav -->
 
             <li class="nav-item">
-                <a class="nav-link" href="kategori.php">
+                <a class="nav-link collapsed" href="kategori.php">
                     <i class="bi bi-tags"></i>
                     <span>Kategori Produk</span>
                 </a>
@@ -140,7 +170,7 @@
                 </a>
             </li><!-- End Laporan Page Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="pengguna.php">
+                <a class="nav-link" href="pengguna.php">
                     <i class="bi bi-people"></i>
                     <span>Pengguna</span>
                 </a>
@@ -152,92 +182,53 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Kategori Produk</h1>
+            <h1>Pengguna</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item active">Kategori Produk</li>
+                    <li class="breadcrumb-item">Pengguna</li>
+                    <li class="breadcrumb-item active">Tambah</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <a href="t_kategori.php" class="btn btn-primary mt-3">
-                            <i class="bi bi-plus-lg"></i> Tambah Data
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <section class="section">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
-                            <!-- Table with stripped rows -->
-                            <table class="table table-striped mt-2">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Kategori</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include "koneksi.php";
-                                    $no = 1;
+                            <form class="row g-3 mt-2" method="post">
+                                <!-- Username -->
+                                <div class="col-12">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Username" maxlength="100" required>
+                                </div>
 
-                                    // Cek apakah ada pencarian
-                                    $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
+                                <!-- Password -->
+                                <div class="col-12">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required>
+                                </div>
 
-                                    // Query dasar
-                                    $sql_query = "SELECT id_kategori, nm_kategori FROM tb_kategori";
+                                <!-- Status -->
+                                <div class="col-12">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-select" id="status" name="status" required>
+                                        <option value="">Pilih Status</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="customer">Customer</option>
+                                    </select>
+                                </div>
 
-                                    // Jika ada pencarian, tambahkan kondisi WHERE
-                                    if (!empty($query)) {
-                                        $sql_query .= " WHERE nm_kategori LIKE '%$query%'";
-                                    }
-
-                                    $sql = mysqli_query($koneksi, $sql_query);
-
-                                    if (mysqli_num_rows($sql) > 0) {
-                                        while ($hasil = mysqli_fetch_array($sql)) {
-                                    ?>
-                                            <tr>
-                                                <td><?php echo $no++; ?></td>
-                                                <td><?php echo $hasil['nm_kategori']; ?></td>
-                                                <td>
-                                                    <a href="e_kategori.php?id=<?php echo $hasil['id_kategori']; ?>" class="btn btn-warning">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </a>
-                                                    <a href="h_kategori.php?id=<?php echo $hasil['id_kategori']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">
-                                                        <i class="bi bi-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php
-                                        }
-                                    } else {
-                                        ?>
-                                        <tr>
-                                            <td colspan="3" class="text-center">Data tidak ditemukan</td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </tbody>
-                            </table>
-                            <!-- End Table with stripped rows -->
+                                <!-- Tombol -->
+                                <div class="text-center">
+                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                                </div>
+                            </form>
 
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -247,14 +238,10 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Arsialiving</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>arsialiving</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg=="target="_blank">jetta</a>
+            Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg==" target="_blank">Jetta</a>
         </div>
     </footer><!-- End Footer -->
 

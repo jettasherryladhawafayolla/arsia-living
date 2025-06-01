@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Arsialiving Admin</title>
+    <title>Produk - Arsialiving</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -28,7 +28,6 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -45,12 +44,11 @@
         </div><!-- End Logo -->
 
         <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?>">
+            <form class="search-form d-flex align-items-center" method="GET" action="">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
-        </div><!-- End Search Bar -->
-
+        </div>
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -60,15 +58,17 @@
                         <i class="bi bi-search"></i>
                     </a>
                 </li><!-- End Search Icon-->
+
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/poto.png" alt="Profile" class="rounded-circle">
+                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <!-- profile-img.jpg diganti dengan foto kalian -->
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>jetta</h6>
+                            <h6>Jetta</h6>
                             <span>Admin</span>
                         </li>
                         <li>
@@ -93,58 +93,57 @@
 
     </header><!-- End Header -->
 
-    <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="index.php">
-                    <i class="bi bi-house-door"></i>
+                    <i class="bi bi-grid"></i>
                     <span>Beranda</span>
                 </a>
-            </li><!-- End Beranda Nav -->
-
+            </li><!-- End Dashboard Nav -->
             <li class="nav-item">
-                <a class="nav-link" href="kategori.php">
-                    <i class="bi bi-tags"></i>
-                    <span>Kategori Produk</span>
+                <a class="nav-link collapsed" href="kategori.php">
+                    <i class="bi bi-airplane"></i>
+                    <span>Kategori</span>
                 </a>
-            </li><!-- End Kategori Produk Page Nav -->
+            </li><!-- End Kategori Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="produk.php">
-                    <i class="bi bi-shop"></i>
+                <a class="nav-link" href="produk.php">
+                    <i class="bi bi-question-circle"></i>
                     <span>Produk</span>
                 </a>
             </li><!-- End Produk Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="keranjang.php">
-                    <i class="bi bi-cart"></i>
+                    <i class="bi bi-envelope"></i>
                     <span>Keranjang</span>
                 </a>
             </li><!-- End Keranjang Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="transaksi.php">
-                    <i class="bi bi-receipt"></i>
+                    <i class="bi bi-card-list"></i>
                     <span>Transaksi</span>
                 </a>
             </li><!-- End Transaksi Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="laporan.php">
-                    <i class="bi bi-file-earmark-bar-graph"></i>
+                    <i class="bi bi-box-arrow-in-right"></i>
                     <span>Laporan</span>
                 </a>
             </li><!-- End Laporan Page Nav -->
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pengguna.php">
-                    <i class="bi bi-people"></i>
+                    <i class="bi bi-dash-circle"></i>
                     <span>Pengguna</span>
                 </a>
-            </li><!-- End Pengguna Page Nav -->
+            </li><!-- End pengguna Page Nav -->
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -152,11 +151,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Kategori Produk</h1>
+            <h1>Produk</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item active">Kategori Produk</li>
+                    <li class="breadcrumb-item active">Produk</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -165,7 +164,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="t_kategori.php" class="btn btn-primary mt-3">
+                        <a href="t_produk.php" class="btn btn-primary mt-3">
                             <i class="bi bi-plus-lg"></i> Tambah Data
                         </a>
                     </div>
@@ -175,16 +174,24 @@
 
         <section class="section">
             <div class="row">
+
                 <div class="col-lg-12">
+
                     <div class="card">
                         <div class="card-body">
+
                             <!-- Table with stripped rows -->
                             <table class="table table-striped mt-2">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Nama Kategori</th>
-                                        <th>Aksi</th>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Nama Produk</th>
+                                        <th scope="col">Harga</th>
+                                        <th scope="col">Stok</th>
+                                        <th scope="col">Deskripsi</th>
+                                        <th scope="col">Nama Kategori</th>
+                                        <th scope="col">Gambar</th>
+                                        <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -192,30 +199,44 @@
                                     include "koneksi.php";
                                     $no = 1;
 
-                                    // Cek apakah ada pencarian
-                                    $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
+                                    // Ambil keyword pencarian dari GET
+                                    $query = isset($_GET['query']) ? mysqli_real_escape_string($koneksi, $_GET['query']) : '';
 
-                                    // Query dasar
-                                    $sql_query = "SELECT id_kategori, nm_kategori FROM tb_kategori";
+                                    //Tambahkan WHERE jika query tidak kosong
+                                    $sql_query = "SELECT tb_produk.*, tb_kategori.nm_kategori From tb_produk left join tb_kategori on tb_produk.id_kategori = tb_kategori.id_kategori";
 
-                                    // Jika ada pencarian, tambahkan kondisi WHERE
                                     if (!empty($query)) {
-                                        $sql_query .= " WHERE nm_kategori LIKE '%$query%'";
+                                        $sql_query .= " WHERE tb_produk.nm_produk LIKE'%$query%' or tb_kategori.nm_kategori like '%$query%' or tb_produk.desk like '%$query%'";
                                     }
+
+                                    echo "<!-- SQL: $sql_query -->";
 
                                     $sql = mysqli_query($koneksi, $sql_query);
 
                                     if (mysqli_num_rows($sql) > 0) {
                                         while ($hasil = mysqli_fetch_array($sql)) {
+
                                     ?>
+
                                             <tr>
                                                 <td><?php echo $no++; ?></td>
+                                                <td><?php echo $hasil['nm_produk']; ?></td>
+                                                <td>Rp <?php echo number_format($hasil['harga'], 0, ',', '.'); ?></td>
+                                                <td><?php echo $hasil['stok']; ?></td>
+                                                <td><?php echo $hasil['desk']; ?></td> <!-- ini butuh header -->
                                                 <td><?php echo $hasil['nm_kategori']; ?></td>
                                                 <td>
-                                                    <a href="e_kategori.php?id=<?php echo $hasil['id_kategori']; ?>" class="btn btn-warning">
+                                                    <?php if (!empty($hasil['gambar'])) { ?>
+                                                        <img src="produk_img/<?php echo $hasil['gambar']; ?>" width="100">
+                                                    <?php } else { ?>
+                                                        Tidak ada Gambar
+                                                    <?php } ?>
+                                                </td>
+                                                <td>
+                                                    <a href="e_produk.php?id=<?php echo $hasil['id_produk']; ?>" class="btn btn-warning">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </a>
-                                                    <a href="h_kategori.php?id=<?php echo $hasil['id_kategori']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">
+                                                    <a href="h_produk.php?id=<?php echo $hasil['id_produk']; ?>" class="btn btn-danger" onclick="return confirm('apakah anda yakin ingin menghapus data?') ">
                                                         <i class="bi bi-trash"></i>
                                                     </a>
                                                 </td>
@@ -225,19 +246,17 @@
                                     } else {
                                         ?>
                                         <tr>
-                                            <td colspan="3" class="text-center">Data tidak ditemukan</td>
+                                            <td colspan="8" class="text-center">Data Tidak Ditemukan</td>
                                         </tr>
                                     <?php
                                     }
                                     ?>
-
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
 
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -247,14 +266,10 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Arsialiving</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>arsialiving</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg=="target="_blank">jetta</a>
+            Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg==">Jetta</a>
         </div>
     </footer><!-- End Footer -->
 

@@ -1,3 +1,23 @@
+<?php
+session_start();
+include "koneksi.php";
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Cek apakah status tersedia dan pastikan user adalah admin
+if (!isset($_SESSION["status"]) || $_SESSION["status"] !== "admin") {
+    echo "<script>
+    alert('Akses ditolak! Halaman ini hanya untuk Admin.');
+    window.location.href='login.php';
+  </script>";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +25,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Arsialiving Admin</title>
+    <title>Pengguna- arsialiving</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -37,9 +57,9 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.php" class="logo d-flex align-items-center">
+            <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Arsialiving</span>
+                <span class="d-none d-lg-block">arsialiving</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -60,26 +80,24 @@
                         <i class="bi bi-search"></i>
                     </a>
                 </li><!-- End Search Icon-->
+
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/poto.png" alt="Profile" class="rounded-circle">
+                        <img src="assets/img/user.jpg" alt="Profile" class="rounded-circle">
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>jetta</h6>
+                            <h6><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h6>
                             <span>Admin</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -106,7 +124,7 @@
             </li><!-- End Beranda Nav -->
 
             <li class="nav-item">
-                <a class="nav-link" href="kategori.php">
+                <a class="nav-link collapsed" href="kategori.php">
                     <i class="bi bi-tags"></i>
                     <span>Kategori Produk</span>
                 </a>
@@ -140,7 +158,7 @@
                 </a>
             </li><!-- End Laporan Page Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="pengguna.php">
+                <a class="nav-link" href="pengguna.php">
                     <i class="bi bi-people"></i>
                     <span>Pengguna</span>
                 </a>
@@ -152,11 +170,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Kategori Produk</h1>
+            <h1>Pengguna</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-                    <li class="breadcrumb-item active">Kategori Produk</li>
+                    <li class="breadcrumb-item active">Pengguna</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -165,7 +183,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="t_kategori.php" class="btn btn-primary mt-3">
+                        <a href="t_pengguna.php" class="btn btn-primary mt-3">
                             <i class="bi bi-plus-lg"></i> Tambah Data
                         </a>
                     </div>
@@ -183,7 +201,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Kategori</th>
+                                        <th>Username</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -192,15 +211,15 @@
                                     include "koneksi.php";
                                     $no = 1;
 
-                                    // Cek apakah ada pencarian
+                                    // Cek apakah ada input pencarian
                                     $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
 
                                     // Query dasar
-                                    $sql_query = "SELECT id_kategori, nm_kategori FROM tb_kategori";
+                                    $sql_query = "SELECT id_user, username, status FROM tb_user";
 
-                                    // Jika ada pencarian, tambahkan kondisi WHERE
+                                    // Tambahkan pencarian jika input tidak kosong
                                     if (!empty($query)) {
-                                        $sql_query .= " WHERE nm_kategori LIKE '%$query%'";
+                                        $sql_query .= " WHERE username LIKE '%$query%'";
                                     }
 
                                     $sql = mysqli_query($koneksi, $sql_query);
@@ -210,12 +229,10 @@
                                     ?>
                                             <tr>
                                                 <td><?php echo $no++; ?></td>
-                                                <td><?php echo $hasil['nm_kategori']; ?></td>
+                                                <td><?php echo $hasil['username']; ?></td>
+                                                <td><?php echo $hasil['status']; ?></td>
                                                 <td>
-                                                    <a href="e_kategori.php?id=<?php echo $hasil['id_kategori']; ?>" class="btn btn-warning">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </a>
-                                                    <a href="h_kategori.php?id=<?php echo $hasil['id_kategori']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">
+                                                    <a href="h_pengguna.php?id=<?php echo $hasil['id_user']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">
                                                         <i class="bi bi-trash"></i>
                                                     </a>
                                                 </td>
@@ -225,7 +242,7 @@
                                     } else {
                                         ?>
                                         <tr>
-                                            <td colspan="3" class="text-center">Data tidak ditemukan</td>
+                                            <td colspan="4" class="text-center">Data tidak ditemukan</td>
                                         </tr>
                                     <?php
                                     }
@@ -247,14 +264,10 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Arsialiving</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>arsialiving</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg=="target="_blank">jetta</a>
+            Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg==" target="_blank">Jetta</a>
         </div>
     </footer><!-- End Footer -->
 

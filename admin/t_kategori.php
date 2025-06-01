@@ -1,3 +1,28 @@
+ <?php
+include "koneksi.php";
+
+if (isset ($_POST['simpan']))  {
+    $auto = mysqli_query($koneksi, "select max(id_kategori) as max_code from tb_kategori");
+    $hasil = mysqli_fetch_array($auto);
+    $code = $hasil['max_code'];
+    $urutan = (int)substr($code, 1,3);
+    $urutan++;
+    $huruf = "k";
+    $id_kategori = $huruf.  sprintf("%03s", $urutan);
+    $nm_kategori = $_POST['nm_kategori'];
+
+    $query = mysqli_query($koneksi, "insert into tb_kategori(id_kategori, nm_kategori) values ('$id_kategori', '$nm_kategori')");
+    if ($query) {
+        echo "<script>alert('data berhasil ditambahkan!')</script>";
+        header("refresh:0, kategori.php");
+    } else {
+        echo "<script>alert('data gagal ditambahkan!')</script>";
+        header("refresh:0, kategori.php");
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +30,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Tables / General - NiceAdmin Bootstrap Template</title>
+  <title>Forms / Layouts - arsialiving</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -46,8 +71,8 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
-      </a>
+        <span class="d-none d-lg-block">Arsialiving</span>
+      </a> 
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
@@ -70,7 +95,10 @@
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-          
+        
+        
+          </a><!-- End Notification Icon -->
+
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have 4 new notifications
@@ -142,7 +170,8 @@
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-
+      
+          </a><!-- End Messages Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
@@ -207,7 +236,7 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            
+          
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -272,337 +301,102 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.html">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>beranda</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End beranda Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="kategori.php">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>kategori.produk</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Badges</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Buttons</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-cards.html">
-              <i class="bi bi-circle"></i><span>Cards</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-carousel.html">
-              <i class="bi bi-circle"></i><span>Carousel</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-list-group.html">
-              <i class="bi bi-circle"></i><span>List group</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-modal.html">
-              <i class="bi bi-circle"></i><span>Modal</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tabs.html">
-              <i class="bi bi-circle"></i><span>Tabs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-pagination.html">
-              <i class="bi bi-circle"></i><span>Pagination</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-progress.html">
-              <i class="bi bi-circle"></i><span>Progress</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-spinners.html">
-              <i class="bi bi-circle"></i><span>Spinners</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tooltips.html">
-              <i class="bi bi-circle"></i><span>Tooltips</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
+      </li><!-- End kategori.produk Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="produk.php">
+          <i class="bi bi-journal-text"></i>
+          <span>produk</span>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
+      </li><!-- End produk Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="keranjang.php">
+          <i class="bi bi-layout-text-window-reverse"></i>
+          <span>keranjang</span>
         </a>
-        <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html" class="active">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
+      </li><!-- End keranjang Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="transaksi.php">
+          <i class="bi bi-bar-chart"></i>
+          <span>transaksi</span>
         </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
+      </li><!-- End transaksi Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="laporan.php">
+          <i class="bi bi-gem"></i>
+          <span>laporan</span>
         </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-remix.html">
-              <i class="bi bi-circle"></i><span>Remix Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-boxicons.html">
-              <i class="bi bi-circle"></i><span>Boxicons</span>
-            </a>
-          </li>
-        </ul>
-   
-      </li><!-- End Icons Nav -->
+      </li><!-- End laporan Nav -->
 
-      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pengguna.php">
+          <i class="bi bi-gem"></i>
+          <span>pengguna</span>
+        </a>
+      </li><!-- End pengguna Nav -->
+
+    
+
+    </ul>
+
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>General Tables</h1>
+      <h1>kategori produk
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">General</li>
+          <li class="breadcrumb-item"><a href="index.html">beranda</a></li>
+          <li class="breadcrumb-item">kategori produk</li>
+          <li class="breadcrumb-item active">tambah</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
     <section class="section">
       <div class="row">
+
         <div class="col-lg-6">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Default Table</h5>
 
-              <!-- Default Table -->
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Default Table Example -->
+              <!-- Vertical Form -->
+              <form class="row g-3 mt-2" method="post">
+                <div class="col-12">
+                  <label for="nm_kategori" class="form-label">Nama Kategori</label>
+                  <input type="text" class="form-control" id="nm_kategori" name="nm_kategori" placeholder="masukkan nama kategori produk">
+                </div>
+                <div class="text-center">
+                  <button type="reset" class="btn btn-secondary">reset</button>
+                  <button type="sumbit" class="btn btn-primary" name="simpan">simpan</button>
+                </div>
+              </form><!-- Vertical Form -->
+
             </div>
           </div>
 
           <div class="card">
-        
+      
           </div>
 
           <div class="card">
-
-            
-          </div>
-
-        <div class="card">
-          </div>
-
-        <div class="card">
+      
           </div>
 
         </div>
-
-        <div class="col-lg-6">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Table with stripped rows</h5>
-
-              <!-- Table with stripped rows -->
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
-
-            </div>
-          </div>
-
-          <div class="card">
-         </div>
       </div>
     </section>
 
@@ -611,14 +405,14 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>Arsialiving</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg=="target="_blank">jetta</a>
     </div>
   </footer><!-- End Footer -->
 

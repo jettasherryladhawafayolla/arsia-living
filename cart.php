@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>aranaz</title>
+  <title>arsialiving</title>
   <link rel="icon" href="img/favicon.png">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -145,18 +145,66 @@
     <div class="container">
       <div class="cart_inner">
         <div class="table-responsive">
-          <table class="table">
-            <thead>
+          <?php
+          include 'admin/koneksi.php'; // Pastikan koneksi ke database dimuat
+
+          if (!isset($_SESSION['id_user'])) {
+            echo "<script>alert('Silahkan login terlebih dahulu'); window.
+            location='login.php';</script>";
+            exit;
+          }
+
+          $id_user = $_SESSION('id_user'); // Ambil user_id dari sesi
+          $Query = "SELECT p.id_pesanan, pr.nm_produk, pr.harga, p.qty, (pr.harga
+          * p.qty) AS total, pr.gambar
+      FROM tb_pesanan p
+      JOIN tb_produk pr ON p.id_user = pr.id_produk
+      JOIN tb_user u ON p.id_user = u.id_user
+      WHERE u.id_user = '$id_user'";
+
+            $result = mysqli_query($koneksi, $query);
+
+            if (!$result) {
+              die("query error; ". mysqli_error($koneksi));
+            }
+
+            // Inisialisasi
+            $subtotal = 0;
+            $diskon = 0;
+            $total_bayar = 0;
+
+            ?>
+            <form action="update_cart.php
+            <table class="table">
+              <thead>
               <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody>
+                <th style="width: 40%; ">produk</th>
+                <th style="width: 20%; ">harga</th>
+                <th style="width: 20%; ">jumlah</th>
+                <th style="width: 15%; ">total</th>
+                <th style="width: 5%; ">Aksi</th>
+          </tr>
+          <tbody>
+            <?php
+            $subtotal = 0;
+            while ($row = mysqli_fetch_assoc($result)) {
+              $subtotal += $row['total'];
+              ?>
               <tr>
                 <td>
+                  <div class="media d-flex align-items-center">
+                    <img src="admin/produk_img/<?php echo $row['gambar']; ?>"
+                    alt=" " width="80px" class="me-3" />
+                    <p class="mb-0 p-3"><?php echo $row['nm_produk']; ?></p>
+            </div>
+            </td>
+            <td>
+              <h5>Rp. <?php echo number_format($row['harga'], 0, ',','
+              '); ?></h5>
+              </td>
+              <td>
+
+            }
                   <div class="media">
                     <div class="d-flex">
                       <img src="img/product/single-product/cart-1.jpg" alt="" />

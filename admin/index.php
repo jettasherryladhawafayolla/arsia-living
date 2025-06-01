@@ -44,7 +44,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Arsialiving</span>
       </a>
@@ -120,9 +120,7 @@
 
           </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
               You have 3 new messages
@@ -186,6 +184,7 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/poto.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Jetta Sheryll
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -223,47 +222,47 @@
       <li class="nav-item">
         <a class="nav-link " href="index.php">
           <i class="bi bi-grid"></i>
-          <span>beranda</span>
+          <span>Beranda</span>
         </a>
-      </li><!-- End beranda Nav -->
+      </li><!-- End Beranda Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="kategori.php">
+        <a class="nav-link collapsed" href="Kategori.php">
           <i class="bi bi-person"></i>
-          <span>kategori.produk</span>
+          <span>Kategori.produk</span>
         </a>
-      </li><!-- End kategori Page Nav -->
+      </li><!-- End Kategori Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="produk.php">
+        <a class="nav-link collapsed" href="Produk.php">
           <i class="bi bi-question-circle"></i>
-          <span>produk</span>
+          <span>Produk</span>
         </a>
-      </li><!-- End produk Page Nav -->
+      </li><!-- End Produk Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="keranjang.php">
+        <a class="nav-link collapsed" href="Keranjang.php">
           <i class="bi bi-envelope"></i>
           <span>Keranjang</span>
         </a>
       </li><!-- End Keranjang Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="transaksi.php">
+        <a class="nav-link collapsed" href="Transaksi.php">
           <i class="bi bi-card-list"></i>
           <span>Transaksi</span>
         </a>
       </li><!-- End Transaksi Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="laporan.php">
+        <a class="nav-link collapsed" href="Laporan.php">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Laporan</span>
         </a>
       </li><!-- End Laporan Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pengguna.php">
+        <a class="nav-link collapsed" href="Pengguna.php">
           <i class="bi bi-dash-circle"></i>
           <span>Pengguna</span>
         </a>
@@ -279,7 +278,7 @@
       <h1>Beranda</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
           <li class="breadcrumb-item active">Beranda</li>
         </ol>
       </nav>
@@ -291,31 +290,30 @@
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-
-          <!-- welcome card -->
-          <div class=" col-12">
-            <div class="card info-card customers-card shadow-sm w-100">
-
-              <div class="card-body text center py -4">
-                <h4 class="mb-2">selamat datang di website admin
+            <!-- welcome card -->
+             <div class=" col-12">
+              <div class="card info-card customers-card shadow-sm w-100">
+                <div class="card-body text-center py-4">
+                  <h4 class="mb-2">Selamat datang di Website Admin
                   <strong> Arsialiving </strong></hd>
-                  <p.class="text-muted small mb-0">kelola produk,transaksi, dan pelanggan dengan mudah.</p>
+                  <p class="text-muted small mb-0">kelola produk,transaksi, dan 
+                  pelanggan dengan mudah.</p>
                 </div>
               </div>
             </div>
-
-            </div><!-- End Customers Card -->
+            <!-- End Customers Card -->
 
             <!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">pesanan <span>| semua waktu</span></h5>
+                  <h5 class="card-title">Pesanan <span>| Semua Waktu</span></h5>
 
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i> <!-- ikon keranjang belanja --> 
+                    <div class="card-icon rounded-circle d-flex align-items-center
+                     justify-content-center">
+                      <i class="bi bi-basket"></i> <!-- ikon keranjang belanja --> 
                     </div>
                     <div class="ps-3">
                       <h6>145</h6>
@@ -332,10 +330,11 @@
               <div class="card info-card revenue-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">pendapatan <span>| hari ini</span></h5>
+                  <h5 class="card-title">Pendapatan <span>| Hari ini</span></h5>
 
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center 
+                    justify-content-center">
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
@@ -362,18 +361,19 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>Arsialiving</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      Designed by <a href="https://www.instagram.com/ettaashhe?igsh=MTRqdnM0Y2s0bjk4bg=="target="_blank">jetta</a>
     </div>
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center 
+  justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
