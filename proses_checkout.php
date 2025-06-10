@@ -48,8 +48,8 @@ foreach ($pesanan_data as $pesanan) {
 $diskon = 0;
 if ($subtotal > 700000 && $subtotal <= 1500000) {
     $diskon = 0.05 * $subtotal;
-} elself ($subtotal > 1500000) {
-    $diskon = 0.00 * $subtotal;
+} elseif ($subtotal > 1500000) {
+    $diskon = 0.08 * $subtotal;
 }
 
 $total_bayar = $subtotal - $diskon;
@@ -61,7 +61,7 @@ $row_id = mysqli_fetch_assoc($result_id);
 $last_id = $row_id['last_id'];
 
 if($last_id) {
-    $new_id = 'T' . str_pad((intval(substri($last_id, 1)) +1), 3, '0'.
+    $new_id = 'T' . str_pad((intval(substr($last_id, 1)) +1), 3, '0'.
     STR_PAD_LEFT);
 } else {
     $new_id = 'T001';
@@ -85,7 +85,7 @@ foreach ($pesanan_data as $pesanan) {
 
     $values[] = "('$new_id', $id_produk', '$qty', '$harga')";
 }
-if (lempty($values)) {
+if (!empty($values)) {
     $query_jualdtl = "INSERT INTO tb_jualdtl (id_jual, id_produk, qry, harga)
     VALUES " . implode(", ", $values);
 
@@ -117,3 +117,4 @@ if (!mysqli_query($koneksi, $query_hapus)) {
 }
 
 echo json_encode(["success" => true]);
+?>

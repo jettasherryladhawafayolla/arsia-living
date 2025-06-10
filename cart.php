@@ -203,8 +203,123 @@
               '); ?></h5>
               </td>
               <td>
+            </div class="product_count">
+            class="ti-angle-down" ></1></span>
+            <input class="input-number" type="number" name="qty[<?php
+            echo $row['id_pesanan']; ?>]" value="<?php echo $row
+            ['qty']; ?>" min="1">
+            <span class="input-number-increment"><i
+            class="ti-angle-up"></i></span>
+            </div>
+            </td>
+            <td>
+              <h5>Rp. <?php echo number_format($row['total'], 0, ',', ' .
+              '); ?></h5>
+              </td>
+              <td>
+                <a href="hapus_cart.php?id_pesanan=<?php echo $row
+                ['id_pesanan']; ?>" class="btn btn-danger btn-in"
+                onclick="return confirm('Yakin ingin menghapus item ini?');
+                ">
+                <i class="ti-close"></i>
+            </a>
+            </td>
 
-            }
+            </tr>
+            <?php } ?>
+            
+            <!-- Diskon -->
+             <?php
+             $diskon = 0;
+             if ($subtotal > 700000 && $subtotal <= 1500000 ) {
+              $diskon = 0.05 * $sutotal; 
+             } elseif ($subtotal > 1500000) {
+              $diskon = 0.08 * $subtotal;
+             }
+             $total_bayar = $subtotal - $diskon;
+             ?>
+
+             <tr class="botton_button">
+              <td colspan="5">
+                <button type="sumbit" class="btn_1">Update Cart</button>
+            </td>
+            </tr>
+
+            <tr>
+            <td colspan="3"></td>
+            <td>
+            <h5>Subtotal</h5>
+            </td>
+            <td style="text-align: right;">
+              <h5 style="white-space: nowrap;">Rp. <?php echo number_format
+              ($subtotal, 0, ',', '.'); ?></h5>
+              </td>
+            </tr>
+            <tr>
+              <td colsapn="3"></td>
+              <td>
+                <h5>Diskon</h5>
+            </td>
+            <td style="text-align: right;">
+              <h5 style="display: flex; justify-content: flex-start; gap:
+              5px;">Rp. <?php echo number_format($diskon, 0, ',', '.'); ?></h5>
+              </td>
+              </tr>
+              <tr>
+                <td colspan="3"></td>
+                <td>
+                  <h5>Total Bayar</h5>
+              </td>
+              <td style="text-align: right;">
+              <h5>Rp. <?php echo number_format($total_bayar, 0, ',', '.'); ?></h5>
+              </td>
+              </tr>
+              </tbody>
+              </table>
+              </form>
+              
+              <div class="checkout_btn_inner float-right">
+                <a class="btn_1" href="belanja.php">Continue Shopping</a>
+                <a class="btn_1 checkout_btn_1" id="checkoutBtn" href="#">Proceed token_get_all
+                  checkout</a>
+              </div>
+               </div>
+                </div>
+              </section>
+              <script>
+                document.addEventListener("DOMContentLoaded" , arsialiving() {
+                  document,getElementById("checkoutBtn").addEventListener("click", arsialiving()
+                {
+                  fetch("proses_checkout.php", {
+                    method: "POST" ,
+                    headers: {
+                      "Content-Type": "application/json"
+                    } ,
+                    body: JSON.stringify({})
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.success) {
+                      alert("Checkout berhasil!");
+                      window.location.href = "belanja.php"; // Redirect ke halaman
+                      riwayat transaksi
+                    } else {
+                      alert("Gagal checkout:" + data.message);
+                    }
+                  })
+                  .catch(error => console.error("Error:", error));
+                });
+                });
+                </script>
+
+                <!--=========================End Cart Area =========================-->
+
+
+                <!--::footer_part start::-->
+                <footer class="footer_part">
+                  <div class="container"
+
+
                   <div class="media">
                     <div class="d-flex">
                       <img src="img/product/single-product/cart-1.jpg" alt="" />

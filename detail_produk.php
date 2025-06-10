@@ -250,14 +250,12 @@
     <div class="container">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-            aria-selected="true">Deskripsi</a>
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" 
+          role="tab" aria-controls="home" aria-selected="true">Deskripsi</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-            aria-selected="false">Stok</a>
-        </li>
-        </li>
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" 
+          role="tab" aria-controls="profile" aria-selected="false">Stok</a>
          </li>
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -316,6 +314,9 @@
               </div>
             </div>
             <?php  } ?>
+          </div>
+        </div>
+      </div>
             <div class="single_product_item">
               <img src="img/product/product_2.png" alt="">
               <div class="single_product_text">
